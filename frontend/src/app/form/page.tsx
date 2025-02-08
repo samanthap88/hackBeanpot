@@ -20,6 +20,9 @@ import {
   FaUserTie,
   FaSignOutAlt,
   FaCreditCard,
+  FaUser,
+  FaDollarSign,
+  FaUsers,
 } from "react-icons/fa";
 
 import { Input } from "@/components/ui/input";
@@ -45,10 +48,11 @@ import {
 
 
 const steps = [
-  { name: "Industry", icon: FaBriefcase },
-  { name: "Stage", icon: FaRocket },
-  { name: "Description", icon: FaFileAlt },
+  { name: "Age", icon: FaUser },
+  { name: "Income", icon: FaDollarSign },
+  { name: "Household", icon: FaUsers },
   { name: "Location", icon: FaMapMarkerAlt },
+  { name: "Employment", icon: FaBriefcase },
 ];
 
 const loadingMessages = [

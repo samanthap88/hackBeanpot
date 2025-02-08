@@ -5,11 +5,11 @@ import { ConvexReactClient } from "convex/react";
 import { ClerkProvider, useAuth } from "@clerk/clerk-react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 
-const convex = new ConvexReactClient("https://youthful-squirrel-12.convex.cloud")
+const convex = new ConvexReactClient("https://disciplined-boar-119.convex.cloud")
 
 export function Providers({children}: PropsWithChildren){
     return (
-        <ClerkProvider publishableKey={"pk_live_Y2xlcmsuYWxvYW5nZWxzLm1lJA"}>
+        <ClerkProvider publishableKey={"pk_test_Y3Jpc3AtbG9uZ2hvcm4tMzcuY2xlcmsuYWNjb3VudHMuZGV2JA"}>
             <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
             {children}
             </ConvexProviderWithClerk>
