@@ -9,10 +9,11 @@ import Stripe from "stripe";
 
 export const createFormData = mutation({
   args: {
-    industry: v.string(),
-    stage: v.string(),
-    description: v.string(),
+    age: v.string(),
+    income: v.string(),
+    householdSize: v.string(),
     location: v.string(),
+    employment: v.string(),
   },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
@@ -22,18 +23,18 @@ export const createFormData = mutation({
     }
     
     const userRecord = await ctx.db
-    .query("users")
-    .withIndex("by_userId", (q) => q.eq("userId", user.subject))
-    .first();
+      .query("users")
+      .withIndex("by_userId", (q) => q.eq("userId", user.subject))
+      .first();
 
-    if (!userRecord){
-      throw new Error("no user with that id found")
-  }
+    if (!userRecord) {
+      throw new Error("No user found");
+    }
 
     const isSubscribed = userRecord.endsOn ? userRecord.endsOn > Date.now() : false;
       
-    if (!isSubscribed && userRecord.credits <=0){
-      throw new Error("Please upgrade to continue using")
+    if (!isSubscribed && userRecord.credits <= 0) {
+      throw new Error("Please upgrade to continue using");
     }
 
     if (!isSubscribed) {
@@ -41,23 +42,17 @@ export const createFormData = mutation({
         credits: Math.max(0, userRecord.credits - 3),
       });
     }
-  
-    
-  
-
-    
 
     await ctx.db.insert("formvalues", {
-      industry: args.industry,
-      stage: args.stage,
-      description: args.description,
+      age: args.age,
+      income: args.income,
+      householdSize: args.householdSize,
       location: args.location,
+      employment: args.employment,
       userId: user.subject
-      
     });
   },
 });
-
 
 export const storeInvestorData = mutation({
     args: {
@@ -118,4 +113,6 @@ export const getUserCredits = query({
     return userRecord.credits;
   },
 });
+
+
 

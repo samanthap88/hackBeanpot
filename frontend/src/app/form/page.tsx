@@ -16,6 +16,11 @@ import {
   FaCoffee,
   FaMagic,
   FaUserTie,
+  FaSignOutAlt,
+  FaCreditCard,
+  FaUser,
+  FaDollarSign,
+  FaUsers,
 } from "react-icons/fa";
 
 import { Input } from "@/components/ui/input";
@@ -36,10 +41,11 @@ import {
 
 
 const steps = [
-  { name: "Name", icon: FaBriefcase },
-  { name: "Income", icon: FaRocket },
-  { name: "Location", icon: FaFileAlt },
-  { name: "Household", icon: FaMapMarkerAlt },
+  { name: "Age", icon: FaUser },
+  { name: "Income", icon: FaDollarSign },
+  { name: "Household", icon: FaUsers },
+  { name: "Location", icon: FaMapMarkerAlt },
+  { name: "Employment", icon: FaBriefcase },
 ];
 
 const loadingMessages = [

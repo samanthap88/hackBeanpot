@@ -3,10 +3,11 @@ import { v } from "convex/values";
 
 export default defineSchema({
   formvalues: defineTable({
-    description: v.string(),
-    industry: v.string(),
+    age: v.string(),
+    income: v.string(),
+    householdSize: v.string(),
     location: v.string(),
-    stage: v.string(),
+    employment: v.string(),
     userId: v.string(),
   }),
   investors: defineTable({

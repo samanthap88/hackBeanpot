@@ -1,7 +1,7 @@
 export default {
     providers: [
       {
-        domain: "https://clerk.aloangels.me",
+        domain: "https://crisp-longhorn-37.clerk.accounts.dev",
         applicationID: "convex",
       },
     ]
@@ -9,3 +9,4 @@ export default {
 
   
   //https://fair-frog-42.clerk.accounts.dev
+  //https://crisp-longhorn-37.clerk.accounts.dev/.well-known/jwks.json
