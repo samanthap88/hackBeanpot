@@ -7,9 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Home } from 'lucide-react';
 
 import {
-  FaChevronRight,
   FaChevronLeft,
-  FaCheck,
   FaRocket,
   FaBriefcase,
   FaFileAlt,
@@ -26,22 +24,17 @@ import {
 } from "react-icons/fa";
 
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { SignInButton, SignOutButton, useSession } from "@clerk/nextjs";
 import { useMutation, useQuery } from "convex/react";
 import { api } from '../../../convex/generated/api';
 import { useInvestors } from '../InvestorsContext';
-import { RedirectToSignIn } from '@clerk/clerk-react';
 
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -56,21 +49,20 @@ const steps = [
 ];
 
 const loadingMessages = [
-  { text: "Summoning unicorns to review your startup...", icon: FaMagic },
-  { text: "Teaching AI to speak 'Venture Capitalist'...", icon: FaUserTie },
-  { text: "Polishing the crystal ball for accurate predictions...", icon: FaSearch },
-  { text: "Convincing Elon Musk to retweet your pitch...", icon: FaRocket },
-  { text: "Searching for investors under couch cushions...", icon: FaSearch },
-  { text: "Bribing the algorithm with virtual cookies...", icon: FaCoffee },
-  { text: "Sending carrier pigeons to Silicon Valley...", icon: FaRocket },
-  { text: "Consulting the ancient startup oracles...", icon: FaMagic },
-  { text: "Aligning the stars for your funding round...", icon: FaMagic },
-  { text: "Hacking into the matrix for better matches...", icon: FaSearch },
+  { text: "Digging through government paperwork so you don't have to...", icon: FaMagic },
+  { text: "Hacking bureaucracy (legally, of course)...", icon: FaUserTie },
+  { text: "Googling 'Why is this form 37 pages long?'...", icon: FaSearch },
+  { text: "Bribing the AI with coffee to speed things up...", icon: FaRocket },
+  { text: "Deciphering government lingo like it's the Da Vinci Code...", icon: FaSearch },
+  { text: "Convincing the system you’re not a robot...", icon: FaCoffee },
+  { text: "Loading... just like that IRS website in April...", icon: FaRocket },
+  { text: "Negotiating with red tape—wish us luck...", icon: FaMagic },
+  { text: "Searching for benefits hidden better than Area 51...", icon: FaMagic },
+  { text: "Finding programs even the government forgot about...", icon: FaSearch },
 ];
 
 export default function EnhancedOnboardingWidget() {
-  const userCredits = useQuery(api.functions.getUserCredits);
-  const { isSignedIn } = useSession();
+
   const createFormInput = useMutation(api.functions.createFormData);
   const storeInvestorData = useMutation(api.functions.storeInvestorData);
   const investorList = useQuery(api.functions.getInvestors);
@@ -118,7 +110,7 @@ export default function EnhancedOnboardingWidget() {
   const handleInputChange = (name: string, value: string) => {
     setFormData({
       ...formData,
-      [name]: value, // Dynamically update the form field based on name
+      [name]: value, 
     });
   };
   
@@ -127,11 +119,6 @@ export default function EnhancedOnboardingWidget() {
     e.preventDefault();
     if (currentStep < steps.length - 1) {
       handleNext();
-      return;
-    }
-
-    if (userCredits !== undefined && userCredits <= 0) {
-      alert("You have no credits left. Please upgrade to continue using the service.");
       return;
     }
 
@@ -192,9 +179,6 @@ export default function EnhancedOnboardingWidget() {
 
   const currentLoadingMessage = loadingMessages[loadingMessageIndex];
 
-  if (!isSignedIn) {
-    return <RedirectToSignIn />;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
@@ -222,28 +206,10 @@ export default function EnhancedOnboardingWidget() {
 
         </a>
 )}
-        
-        {isSignedIn ? (
-          <SignOutButton>
-            <div  className="bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg rounded-lg shadow-md p-3 flex items-center space-x-2">
-              <FaSignOutAlt className="mr-2 text-black" />
-              <p className='font-bold text-gray-800 hidden lg:block'>Sign Out</p>
-
-            </div>
-          </SignOutButton>
-        ) : (
-          <SignInButton />
-        )}
-      </div>
-      <div className="absolute top-4 left-4 z-20">
-        <div className="bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg rounded-lg shadow-md p-3 flex items-center space-x-2">
-          <FaCreditCard className="text-blue-500" />
-          <span className="font-bold text-gray-800">Credits: {userCredits !== undefined ? userCredits : 'Loading...'}</span>
-        </div>
       </div>
 
 
-      {isSignedIn && !isLoading && (
+
   <div className="w-full max-w-lg z-10">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -347,7 +313,6 @@ export default function EnhancedOnboardingWidget() {
       </div>
     </motion.div>
   </div>
-)}
     </div>
   );
 }
