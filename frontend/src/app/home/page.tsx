@@ -13,6 +13,21 @@ import {useSession } from "@clerk/nextjs";
 import { useDarkMode } from "../DarkModeContext";
 import { useRouter } from 'next/navigation';
 import { userIsSubscribed } from "@/hooks/userIsSubscribed"; 
+import {
+  FaChevronRight,
+  FaChevronLeft,
+  FaCheck,
+  FaRocket,
+  FaBriefcase,
+  FaFileAlt,
+  FaMapMarkerAlt,
+  FaSearch,
+  FaCoffee,
+  FaMagic,
+  FaUserTie,
+  FaSignOutAlt,
+  FaCreditCard,
+} from "react-icons/fa";
 
 interface ContactDetails {
   "Partner Name": string;
@@ -34,11 +49,27 @@ interface HomeProps {
   result: any;
 }
 
+const loadingMessages = [
+  { text: "Summoning unicorns to review your startup...", icon: FaMagic },
+  { text: "Teaching AI to speak 'Venture Capitalist'...", icon: FaUserTie },
+  { text: "Polishing the crystal ball for accurate predictions...", icon: FaSearch },
+  { text: "Convincing Elon Musk to retweet your pitch...", icon: FaRocket },
+  { text: "Searching for investors under couch cushions...", icon: FaSearch },
+  { text: "Bribing the algorithm with virtual cookies...", icon: FaCoffee },
+  { text: "Sending carrier pigeons to Silicon Valley...", icon: FaRocket },
+  { text: "Consulting the ancient startup oracles...", icon: FaMagic },
+  { text: "Aligning the stars for your funding round...", icon: FaMagic },
+  { text: "Hacking into the matrix for better matches...", icon: FaSearch },
+];
+
 export default function Home(result:any) {
   const [investorsData, setInvestorsData] = useState<Investor[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFocus, setSelectedFocus] = useState<string | null>(null);
   const { isDarkMode, setIsDarkMode } = useDarkMode(); 
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const router = useRouter();
 
   const { investors } = useInvestors();

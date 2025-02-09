@@ -92,7 +92,6 @@ export default function EnhancedOnboardingWidget() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(investors)
     if (!isLoading && investors) {
         console.log(investors)
         let cleanedData = investors.replace(/`/g, '').replace(/\bjson\b/gi, '');
@@ -127,6 +126,7 @@ export default function EnhancedOnboardingWidget() {
     setLoadingProgress(0);
 
     try {
+      setIsLoading(true)
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
@@ -209,7 +209,7 @@ export default function EnhancedOnboardingWidget() {
       </div>
 
 
-
+{!isLoading && (
   <div className="w-full max-w-lg z-10">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -313,6 +313,37 @@ export default function EnhancedOnboardingWidget() {
       </div>
     </motion.div>
   </div>
+)}
+  {isLoading && (
+        <div className="w-full max-w-lg z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="backdrop-blur-md bg-white/90 rounded-2xl shadow-xl overflow-hidden border border-gray-200 p-8"
+          >
+            <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
+              Finding Your Perfect Investors
+            </h2>
+            <div className="flex justify-center items-center mb-6">
+              <div className="relative">
+                <div className="w-24 h-24 border-t-4 border-b-4 border-blue-500 rounded-full animate-spin"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  {React.createElement(currentLoadingMessage.icon, { className: "text-blue-500 text-4xl" })}
+                </div>
+              </div>
+            </div>
+            <p className="text-gray-600 text-center mb-6 text-lg font-medium">{currentLoadingMessage.text}</p>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+              <div
+                className="bg-blue-600 h-2.5 rounded-full transition-all duration-500 ease-out"
+                style={{width: `${loadingProgress}%`}}
+              ></div>
+            </div>
+            <p className="text-center mt-2 text-sm text-gray-500">{loadingProgress}% Complete</p>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
