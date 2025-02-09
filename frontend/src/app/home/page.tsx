@@ -126,11 +126,7 @@ export default function Home(result:any) {
 
   
   
-  const blurMatchReason = (reason: string) => {
-    return reason.replace(/\b\w+\b/g, (word) => {
-      return word.length > 3 ? "●".repeat(word.length) : word;
-    });
-  };
+
   const uniqueFocusAreas = Array.from(
     new Set(
       investorsData.flatMap((investor:any) =>
@@ -145,10 +141,6 @@ export default function Home(result:any) {
         .includes(searchTerm.toLowerCase()) &&
       (!selectedFocus || investor["Fund Focus Areas"].includes(selectedFocus))
   );
-
-  if (!isSignedIn) {
-    return <RedirectToSignIn />;
-  }
 
   return (
 
@@ -278,9 +270,7 @@ export default function Home(result:any) {
                         isDarkMode ? "text-gray-300" : "text-gray-600"
                       } mb-4`}
                     >
-                      {shouldBlur(investor["Likelihood to Invest"])
-                        ? blurMatchReason(investor["Match Reason"])
-                        : investor["Match Reason"]}
+                      
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
                       {investor["Fund Focus Areas"]
@@ -337,73 +327,8 @@ export default function Home(result:any) {
                         </a>
                       )}
                     </div>
-                    <div className="flex space-x-2 mt-4">
-                      {investor["Contact Details"]["Social Links"].Twitter !==
-                        "nan" && (
-                        <a
-                          href={
-                            investor["Contact Details"]["Social Links"].Twitter
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`${
-                            isDarkMode
-                              ? "text-blue-400 hover:text-blue-300"
-                              : "text-blue-600 hover:text-blue-700"
-                          }`}
-                        >
-                          <TwitterIcon className="w-5 h-5" />
-                        </a>
-                      )}
-                      {investor["Contact Details"]["Social Links"].LinkedIn !==
-                        "nan" && (
-                        <a
-                          href={
-                            investor["Contact Details"]["Social Links"].LinkedIn
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`${
-                            isDarkMode
-                              ? "text-blue-400 hover:text-blue-300"
-                              : "text-blue-600 hover:text-blue-700"
-                          }`}
-                        >
-                          <LinkedinIcon className="w-5 h-5" />
-                        </a>
-                      )}
-                      {investor["Contact Details"]["Social Links"].Facebook !==
-                        "nan" && (
-                        <a
-                          href={
-                            investor["Contact Details"]["Social Links"].Facebook
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`${
-                            isDarkMode
-                              ? "text-blue-400 hover:text-blue-300"
-                              : "text-blue-600 hover:text-blue-700"
-                          }`}
-                        >
-                          <FacebookIcon className="w-5 h-5" />
-                        </a>
-                      )}
-                    </div>
-                    {shouldBlur(investor["Likelihood to Invest"]) && (
-                      <div
-                        className={`absolute inset-0 ${
-                          isDarkMode ? "bg-gray-800" : "bg-gray-100"
-                        } bg-opacity-80 backdrop-blur-sm flex items-center justify-center`}
-                      >
-                        <div className="text-yellow-500 flex flex-col items-center">
-                          <LockIcon className="w-8 h-8 mb-2" />
-                          <span className="text-sm font-medium">
-                            Upgrade to unlock
-                          </span>
-                        </div>
-                      </div>
-                    )}
+                   
+                    
                   </CardContent>
                 </Card>
               </motion.div>
