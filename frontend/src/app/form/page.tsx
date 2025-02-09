@@ -135,7 +135,7 @@ export default function EnhancedOnboardingWidget() {
       const response = await fetch('https://tall-rhianna-sams-projects-e2699755.koyeb.app/', {
         method: 'POST',
         body: formDataToSend,
-      });
+      }); 
 
       if (!response.ok) {
         throw new Error('Failed to fetch investors');
@@ -269,8 +269,8 @@ export default function EnhancedOnboardingWidget() {
               )}
               {currentStep === 2 && (
                 <div className="space-y-4">
-                  <Label htmlFor="household" className="text-gray-700">Household Size</Label>
-                  <Input id="household" name="household" type="number" value={formData.householdSize} 
+                  <Label htmlFor="householdSize" className="text-gray-700">Household Size</Label>
+                  <Input id="householdSize" name="householdSize" type="number" value={formData.householdSize} 
                     onChange={(e) => handleInputChange(e.target.name, e.target.value)} required />
                 </div>
               )}
