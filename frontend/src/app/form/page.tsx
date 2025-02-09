@@ -126,7 +126,7 @@ export default function EnhancedOnboardingWidget() {
         formDataToSend.append(key, value);
       });
 
-      const response = await fetch('https://ripe-tania-aloangels-0652a7cd.koyeb.app/find_investors', {
+      const response = await fetch('https://tall-rhianna-sams-projects-e2699755.koyeb.app/', {
         method: 'POST',
         body: formDataToSend,
       });
