@@ -269,15 +269,15 @@ export default function EnhancedOnboardingWidget() {
               )}
               {currentStep === 2 && (
                 <div className="space-y-4">
-                  <Label htmlFor="location" className="text-gray-700">Your Location</Label>
-                  <Input id="location" name="location" value={formData.location} 
+                  <Label htmlFor="household" className="text-gray-700">Household Size</Label>
+                  <Input id="household" name="household" type="number" value={formData.householdSize} 
                     onChange={(e) => handleInputChange(e.target.name, e.target.value)} required />
                 </div>
               )}
               {currentStep === 3 && (
                 <div className="space-y-4">
-                  <Label htmlFor="householdSize" className="text-gray-700">Household Size</Label>
-                  <Input id="householdSize" name="householdSize" type="number" value={formData.householdSize} 
+                  <Label htmlFor="location" className="text-gray-700">Location</Label>
+                  <Input id="location" name="location"  value={formData.location} 
                     onChange={(e) => handleInputChange(e.target.name, e.target.value)} required />
                 </div>
               )}
