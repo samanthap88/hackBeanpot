@@ -116,9 +116,6 @@ export default function EnhancedOnboardingWidget() {
     });
   };
 
-  if (!isSignedIn) {
-    return <RedirectToSignIn />;
-  }
   
 
   const handleSubmit = async (e: React.FormEvent) => {
