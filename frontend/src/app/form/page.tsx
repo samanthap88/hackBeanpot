@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from "framer-motion";
 import { Home } from 'lucide-react';
+import { RedirectToSignIn } from '@clerk/clerk-react';
 
 import {
   FaChevronLeft,
@@ -30,6 +31,7 @@ import { Progress } from "@/components/ui/progress";
 import { useMutation, useQuery } from "convex/react";
 import { api } from '../../../convex/generated/api';
 import { useInvestors } from '../InvestorsContext';
+import { SignInButton, SignOutButton, useSession } from "@clerk/nextjs";
 
 import {
   Select,
@@ -67,6 +69,7 @@ export default function EnhancedOnboardingWidget() {
   const storeInvestorData = useMutation(api.functions.storeInvestorData);
   const investorList = useQuery(api.functions.getInvestors);
   const { setInvestors2 } = useInvestors();
+  const { isSignedIn } = useSession();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -112,6 +115,10 @@ export default function EnhancedOnboardingWidget() {
       [name]: value, 
     });
   };
+
+  if (!isSignedIn) {
+    return <RedirectToSignIn />;
+  }
   
 
   const handleSubmit = async (e: React.FormEvent) => {
