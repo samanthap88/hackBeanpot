@@ -1,6 +1,5 @@
 "use client"
 import { useState, useEffect } from "react";
-import Header from "@/components/header"
 import { Input } from "@/components/ui/input";
 import {useQuery } from "convex/react";
 import { api } from '../../../convex/generated/api';
@@ -11,22 +10,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useInvestors } from "../InvestorsContext";
 import {useSession } from "@clerk/nextjs";
-import { RedirectToSignIn } from '@clerk/clerk-react';
 import { useDarkMode } from "../DarkModeContext";
 import { useRouter } from 'next/navigation';
 import { userIsSubscribed } from "@/hooks/userIsSubscribed"; 
 
-
-interface SocialLinks {
-  Twitter?: string;
-  LinkedIn?: string;
-  Facebook?: string;
-}
 interface ContactDetails {
   "Partner Name": string;
   Email: string;
   Website: string;
-  "Social Links": SocialLinks;
 }
 interface Investor {
   "Investor Name": string;
@@ -40,35 +31,17 @@ interface Investor {
 interface HomeProps {
   isDarkMode: boolean;
   setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-  result: any; // Adjust this based on what `result` actually contains
+  result: any;
 }
 
 export default function Home(result:any) {
-  const { isSignedIn } = useSession();
   const [investorsData, setInvestorsData] = useState<Investor[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFocus, setSelectedFocus] = useState<string | null>(null);
-  const isSubscribed = userIsSubscribed();
-  const shouldBlur = (likelihood: string) => isSubscribed === undefined ? true : (isSubscribed ? parseInt(likelihood) > 99 : parseInt(likelihood) > 74);
   const { isDarkMode, setIsDarkMode } = useDarkMode(); 
   const router = useRouter();
 
-
-  const getLikelihoodColor = (likelihood: string) => {
-    const percentage = parseInt(likelihood);
-    if (percentage >= 80) return "bg-emerald-600 text-emerald-50";
-    if (percentage >= 70) return "bg-teal-600 text-teal-50";
-    if (percentage >= 60) return "bg-amber-600 text-amber-50";
-    return "bg-blue-600 text-blue-50";
-  };
-
   const { investors } = useInvestors();
-
-
-
-
-  
-
   
   const lastSearch = useQuery(api.functions.getInvestors);
 
@@ -145,7 +118,6 @@ export default function Home(result:any) {
   return (
 
     <div>  
-      <Header/>
        
         
         
@@ -241,26 +213,10 @@ export default function Home(result:any) {
                             isDarkMode ? "text-gray-100" : "text-gray-800"
                           } break-words pr-2`}
                         >
-                          {shouldBlur(investor["Likelihood to Invest"])
-                            ? "●●●●●"
-                            : investor["Investor Name"]}
+                          
+                             {investor["Investor Name"]}
                         </span>
-                        <div className="flex flex-col items-end shrink-0">
-                          <Badge
-                            className={`${getLikelihoodColor(
-                              investor["Likelihood to Invest"]
-                            )} text-xs font-medium px-2 py-1`}
-                          >
-                            {investor["Likelihood to Invest"]}
-                          </Badge>
-                          <span
-                            className={`text-xs mt-1 ${
-                              isDarkMode ? "text-gray-400" : "text-gray-600"
-                            }`}
-                          >
-                            Investment Likelihood
-                          </span>
-                        </div>
+                        
                       </div>
                     </CardTitle>
                   </CardHeader>
